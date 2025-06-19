@@ -10,9 +10,10 @@ A React Native app that allows users to explore and filter courses by topics. Bu
 - 🧠 Topic selection modal
 - ⚡ Built with React Native + Expo
 
-## 🖼️ Screenshots
+## 🖼️ Screenshots (Tested on iPad Pro 13-inch Simulator)
+<img src="https://github.com/user-attachments/assets/173c14e6-ed18-4b92-b1c4-041b5a622afb" width=500/>
+<img src="https://github.com/user-attachments/assets/96e372ef-105c-411b-b67a-27bb12a7f0a5" width=500/>
 
-> Add screenshots here once available
 
 ## 🚀 Getting Started
 
