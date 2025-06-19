@@ -15,6 +15,10 @@ export default function CoursesList({ courses }: Props) {
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
+      initialNumToRender={5}
+      ListEmptyComponent={
+        <Text style={styles.empty}>Нет доступных курсов</Text>
+      }
     />
   );
 }
@@ -23,5 +27,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     alignItems: "center"
-  }
+  },
+  empty: { fontSize: 20, fontWeight: "700", color: "#FFF" }
 });

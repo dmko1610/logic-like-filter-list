@@ -28,7 +28,7 @@ export default function TopicSelectorModal({
       <View style={styles.modal}>
         <View style={styles.header}>
           <Text style={styles.title}>Выбор темы</Text>
-          <Pressable onPress={() => onClose()} style={styles.button}>
+          <Pressable onPress={onClose} style={styles.button}>
             <Feather name="x" size={24} color="#9AA5B5" />
           </Pressable>
         </View>

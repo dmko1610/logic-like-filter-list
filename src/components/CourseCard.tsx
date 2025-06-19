@@ -1,11 +1,14 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { Course } from "../types/course";
+import { memo } from "react";
 
 type Props = {
   course: Course;
 };
 
-export default function CourseCard({ course }: Props) {
+const { width } = Dimensions.get("window");
+
+export default memo(function CourseCard({ course }: Props) {
   return (
     <View style={styles.card}>
       <Image source={{ uri: course.image }} style={styles.image} />
@@ -14,12 +17,12 @@ export default function CourseCard({ course }: Props) {
       </View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   card: {
-    width: 210,
-    height: 180,
+    width: width * 0.3,
+    height: width * 0.25,
     borderRadius: 24,
     backgroundColor: "#FFF",
     marginRight: 16,
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 3
   },
-  image: { width: "100%", height: '85%', resizeMode: "contain" },
+  image: { width: "100%", height: "85%", resizeMode: "contain" },
   footer: {
     flex: 1,
     backgroundColor: "#FFF",

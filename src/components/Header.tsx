@@ -10,7 +10,7 @@ export default function Header({ currentTag, onPress }: Props) {
   return (
     <View style={styles.wrapper}>
       <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.text}>{currentTag || "Все темы"}</Text>
+        <Text style={styles.text} adjustsFontSizeToFit>{currentTag || "Все темы"}</Text>
         <Feather name="chevron-down" size={18} color="#FFF" />
       </Pressable>
     </View>

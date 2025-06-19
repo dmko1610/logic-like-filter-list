@@ -1,8 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import CoursesList from "../components/CoursesList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Course } from "../types/course";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import Header from "../components/Header";
 import TopicSelectorModal from "../components/TopciSelectorModal";
 
@@ -11,18 +11,33 @@ export default function Home() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const filteredCourses = selectedTag
-    ? courses.filter((course) => course.tags.includes(selectedTag))
-    : courses;
+  const filteredCourses = useMemo(() => {
+    return selectedTag
+      ? courses.filter((course) => course.tags.includes(selectedTag))
+      : courses;
+  }, [courses, selectedTag]);
 
-  const allTags = Array.from(new Set(courses.flatMap((c) => c.tags)));
+  const allTags = useMemo(() => {
+    return Array.from(new Set(courses.flatMap((c) => c.tags)));
+  }, [courses]);
+
+  const handleOpenModal = useCallback(() => setModalVisible(true), []);
+  const handleCloseModal = useCallback(() => setModalVisible(false), []);
+  const handleSelectTag = useCallback((tag: string | null) => {
+    setSelectedTag(tag);
+    setModalVisible(false);
+  }, []);
 
   useEffect(() => {
     fetch("https://logiclike.com/docs/courses.json")
       .then((res) => res.json())
       .then(setCourses)
-      .catch(console.error)
+      .catch((error) => {
+        console.error(error);
+        setError(true);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -34,19 +49,24 @@ export default function Home() {
     );
   }
 
+  if (error) {
+    return (
+      <View style={styles.loader}>
+        <Text style={{ color: "#FFF" }}>Что-то пошло не так.</Text>
+      </View>
+    );
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Header currentTag={selectedTag} onPress={() => setModalVisible(true)} />
+    <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
+      <Header currentTag={selectedTag} onPress={handleOpenModal} />
       <CoursesList courses={filteredCourses} />
       <TopicSelectorModal
         visible={modalVisible}
         topics={allTags}
         selected={selectedTag}
-        onSelect={(tag) => {
-          setSelectedTag(tag);
-          setModalVisible(false);
-        }}
-        onClose={() => setModalVisible(false)}
+        onSelect={handleSelectTag}
+        onClose={handleCloseModal}
       />
     </SafeAreaView>
   );
