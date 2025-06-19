@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { template } from "@babel/core";
 
 type Props = {
   currentTag: string | null;
@@ -10,7 +9,7 @@ type Props = {
 export default function Header({ currentTag, onPress }: Props) {
   return (
     <View style={styles.wrapper}>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={onPress}>
         <Text style={styles.text}>{currentTag || "Все темы"}</Text>
         <Feather name="chevron-down" size={18} color="#FFF" />
       </Pressable>
